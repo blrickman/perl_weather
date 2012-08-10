@@ -12,11 +12,13 @@ use weatheroptions;
 my $date = '';
 my $options = '';
 my $wstation = 'KILCHICA114';
+my $request = 'TemperatureF';
 
 GetOptions(
   'history=s'  => \$date,
   'options'    => \$options,
   'wstation=s' => \$wstation,
+  'request=s'  => \$request,
 );
 
 my $website = "http://www.wunderground.com/weatherstation/WXDailyHistory.asp?ID=$wstation&format=0";
@@ -41,7 +43,7 @@ if ($options) {
   exit;
 }
 
-say $$data{DateUTC}[0];
+print "According to wunderground.com, the $request is ".$$data{$request}[0]." as of ".$$data{Time}[0]."\n";
 
 __END__
 print "the heat index is " . heatindex($temp,relhum($temp,$dpt)) . "°F\nthe temperature is $temp°F\nrelative humidity is " . relhum($temp,$dpt) . "\%\n";
