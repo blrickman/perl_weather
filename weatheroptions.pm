@@ -10,18 +10,17 @@ sub format_weather {
   pop @warray; #empty string at end
   die 'No data at website, check Date and/or Weather Station.' unless $warray[1];
 
+  for (@warray) {
+    s/,$//;
+    s/^\n//;
+  }
+
   for my $j (0..@warray-1) {
     my $i = 1;
     while ($i) {
       $i = chomp $warray[$j];
     }
-    chop $warray[$j] if $j; #remove extra comma
 
-#remove new line at beginning of elements
-    if ($warray[$j] =~ /\n(.+)/) {
-      $warray[$j] = $1;
-    } else {die "hashed weather failed at new line removal: $!"
-    }
     my @temp = split /,/, $warray[$j];
     $warray[$j] = \@temp;
   }
