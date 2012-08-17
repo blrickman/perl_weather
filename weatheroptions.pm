@@ -55,9 +55,6 @@ sub relhum {
   return sprintf("%.0f",(100*((112-.1*tocels($temp)+tocels($dpt))/(112+.9*tocels($temp)))**8));
 }
 
-sub tocels {
-  my $tempf = shift;
-  return 5*($tempf-32)/9
-}
+sub tocels { 5*(shift()-32)/9 }
 
 1;
